@@ -538,22 +538,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fbd475a4d9e04ac19b18400f7c0e25c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  anchorPrefab: {fileID: 1368341350197815762, guid: 000ead232388e45489c9cacf6b452f32,
+  anchorPrefab: {fileID: 1368341350197815762, guid: 7e656f2cb7db6402ca9942ab6fd063ef,
     type: 3}
   controllerTransform: {fileID: 1360512285}
-  menuInputAction:
-    m_UseReference: 1
-    m_Action:
-      m_Name: Menu Input
-      m_Type: 0
-      m_ExpectedControlType: 
-      m_Id: 71a212f5-730b-476c-8d05-3b60cbb79486
-      m_Processors: 
-      m_Interactions: 
-      m_SingletonActionBindings: []
-      m_Flags: 0
-    m_Reference: {fileID: 2473536702234959757, guid: bb4daeceea261404d9e9069323220d1b,
-      type: 3}
   bumperInputAction:
     m_UseReference: 1
     m_Action:
@@ -566,6 +553,19 @@ MonoBehaviour:
       m_SingletonActionBindings: []
       m_Flags: 0
     m_Reference: {fileID: 1990818190100912241, guid: bb4daeceea261404d9e9069323220d1b,
+      type: 3}
+  menuInputAction:
+    m_UseReference: 1
+    m_Action:
+      m_Name: Menu Input
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: c2990698-3fde-495a-aed8-bb747575c5fd
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+      m_Flags: 0
+    m_Reference: {fileID: 2473536702234959757, guid: bb4daeceea261404d9e9069323220d1b,
       type: 3}
   queryAnchorRadius: 10
 --- !u!4 &507355661
@@ -688,6 +688,7 @@ RectTransform:
   - {fileID: 94422811}
   - {fileID: 1158844026}
   - {fileID: 1566403520}
+  - {fileID: 692565003}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 10, y: -25, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -911,6 +912,7 @@ MonoBehaviour:
   clearAllAnchorsButton: {fileID: 1566403521}
   anchorsStatusText: {fileID: 94422812}
   refreshAnchorsStatusFrequency: 0.5
+  distanceFromCamera: 0.75
   onRestoreAnchorsExecuted:
     m_PersistentCalls:
       m_Calls: []
@@ -942,7 +944,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 552096730}
     m_Modifications:
     - target: {fileID: 2367478637801121078, guid: 6673a73abd2c14713a64fdd51d015137,
         type: 3}
@@ -991,6 +993,21 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2781207885716497921, guid: 6673a73abd2c14713a64fdd51d015137,
         type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2781207885716497921, guid: 6673a73abd2c14713a64fdd51d015137,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2781207885716497921, guid: 6673a73abd2c14713a64fdd51d015137,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2781207885716497921, guid: 6673a73abd2c14713a64fdd51d015137,
+        type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -1002,7 +1019,7 @@ PrefabInstance:
     - target: {fileID: 2781207885716497921, guid: 6673a73abd2c14713a64fdd51d015137,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1.25
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2781207885716497921, guid: 6673a73abd2c14713a64fdd51d015137,
         type: 3}
@@ -1027,7 +1044,7 @@ PrefabInstance:
     - target: {fileID: 2781207885716497921, guid: 6673a73abd2c14713a64fdd51d015137,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 0.41
       objectReference: {fileID: 0}
     - target: {fileID: 2781207885716497921, guid: 6673a73abd2c14713a64fdd51d015137,
         type: 3}
@@ -1090,6 +1107,12 @@ MonoBehaviour:
   debugAreaText: {fileID: 1821951507}
   enableDebug: 1
   maxLines: 15
+--- !u!224 &692565003 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 2781207885716497921, guid: 6673a73abd2c14713a64fdd51d015137,
+    type: 3}
+  m_PrefabInstance: {fileID: 692564996}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &970827149
 GameObject:
   m_ObjectHideFlags: 0
@@ -1919,6 +1942,5 @@ SceneRoots:
   m_Roots:
   - {fileID: 203844589}
   - {fileID: 1647645928}
-  - {fileID: 692564996}
   - {fileID: 507355661}
   - {fileID: 552096730}

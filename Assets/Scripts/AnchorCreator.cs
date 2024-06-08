@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,6 +18,7 @@ public class AnchorCreator : Singleton<AnchorCreator>
     [SerializeField] private GameObject anchorPrefab;
     [SerializeField] private Transform controllerTransform;
     [SerializeField] private InputActionProperty bumperInputAction;
+    [SerializeField] private InputActionProperty menuInputAction;
     [SerializeField] private float queryAnchorRadius = 10.0f;
     
     // active subsystem used for querying anchor confidence
@@ -34,7 +34,7 @@ public class AnchorCreator : Singleton<AnchorCreator>
         public ARAnchor AnchorObject;
     }
     
-    private List<ARAnchor> localAnchors = new ();
+    private List<ARAnchor> localAnchors = new();
     private List<StoredAnchor> storedAnchors =  new();
 
     public string Status => $"Local: {localAnchors.Count} Stored: {storedAnchors.Count}";
@@ -49,6 +49,7 @@ public class AnchorCreator : Singleton<AnchorCreator>
         bumperInputAction.action.Enable();
         
         bumperInputAction.action.canceled += OnBumperActionReleased;
+        menuInputAction.action.performed += OnMenuActionPerformed;
         
         AttachStorageListeners();
         
@@ -56,17 +57,16 @@ public class AnchorCreator : Singleton<AnchorCreator>
         AnchorControlPanel.Instance.onRestoreAnchorsExecuted.AddListener(QueryAnchors);
         AnchorControlPanel.Instance.onClearAnchorsExecuted.AddListener(ClearAllAnchors);
     }
-
+    
     private void Update()
     {
         if (bumperInputAction.action.IsPressed())
         {
-            Logger.Instance.LogInfo("Bumper Pressed");
             if (lastCreatedObjectForAnchor == null)
             {
                 lastCreatedObjectForAnchor = Instantiate(anchorPrefab, controllerTransform.position,
                     controllerTransform.rotation);
-                lastCreatedObjectForAnchor.transform.GetChild(0).GetComponent<Renderer>()
+                lastCreatedObjectForAnchor.transform.GetComponentInChildren<Renderer>()
                     .material.color = Color.gray;
             }
             else
@@ -77,8 +77,12 @@ public class AnchorCreator : Singleton<AnchorCreator>
     // Bumper started and canceled actions
     private void OnBumperActionReleased(InputAction.CallbackContext _)
     {
-        Logger.Instance.LogInfo("Bumper Released");
         if(lastCreatedObjectForAnchor != null) CreateAnchor(persist: true);
+    }
+
+    private void OnMenuActionPerformed(InputAction.CallbackContext _)
+    {
+        AnchorControlPanel.Instance.ResetPosition();
     }
 
     private void ClearAllAnchors()
@@ -108,7 +112,7 @@ public class AnchorCreator : Singleton<AnchorCreator>
     // Internal Anchor CRUD Methods
     private void CreateAnchor(bool persist = false)
     {
-        lastCreatedObjectForAnchor.transform.GetChild(0).GetComponent<Renderer>()
+        lastCreatedObjectForAnchor.transform.GetComponentInChildren<Renderer>()
             .material.color = Color.red;
         
         ARAnchor newAnchor = lastCreatedObjectForAnchor.AddComponent<ARAnchor>();
