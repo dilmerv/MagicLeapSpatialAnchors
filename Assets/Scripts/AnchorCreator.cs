@@ -164,7 +164,7 @@ public class AnchorCreator : Singleton<AnchorCreator>
         storage.OnPublishComplete += OnPublishCompleted;
         
         // Deleting a published Anchor from Storage
-        storage.OnDeletedComplete += OnDeleteComplete;
+        storage.OnDeletedComplete += OnDeleteCompleted;
     }
 
     private void OnQueryCompleted(List<string> anchorMapPositionIds)
@@ -227,7 +227,7 @@ public class AnchorCreator : Singleton<AnchorCreator>
         }
     }
     
-    private void OnDeleteComplete(List<string> anchorMapPositionIds)
+    private void OnDeleteCompleted(List<string> anchorMapPositionIds)
     {
         foreach (var anchorMapPositionId in anchorMapPositionIds)
         {
@@ -236,8 +236,7 @@ public class AnchorCreator : Singleton<AnchorCreator>
             {
                 Destroy(storedAnchors[storedAnchorIndex].AnchorObject.gameObject);
                 storedAnchors.RemoveAt(storedAnchorIndex);
-                Logger.Instance.LogInfo($"AnchorId: {storedAnchors[storedAnchorIndex].AnchorId} " +
-                                        $"AnchorMapPositionId: {storedAnchors[storedAnchorIndex].AnchorMapPositionId} deleted from storage:");
+                Logger.Instance.LogInfo($"OnDeleteCompleted AnchorId: {anchorMapPositionId} was removed");
             }
         }
     }
