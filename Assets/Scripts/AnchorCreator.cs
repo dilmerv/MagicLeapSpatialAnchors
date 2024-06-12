@@ -162,7 +162,6 @@ public class AnchorCreator : Singleton<AnchorCreator>
         
         // Publishing Local Anchor to Storage
         storage.OnPublishComplete += OnPublishCompleted;
-        
         // Deleting a published Anchor from Storage
         storage.OnDeletedComplete += OnDeleteCompleted;
     }
@@ -195,14 +194,17 @@ public class AnchorCreator : Singleton<AnchorCreator>
             return;
         }
 
-        StoredAnchor newStoredAnchor;
-        newStoredAnchor.AnchorId = anchorId;
-        newStoredAnchor.AnchorMapPositionId = anchorMapPositionId;
-
         GameObject newAnchor = Instantiate(anchorPrefab, pose.position, pose.rotation);
         ARAnchor newAnchorComponent = newAnchor.AddComponent<ARAnchor>();
-        newAnchor.AddComponent<AnchorState>();
         
+        StoredAnchor newStoredAnchor = new StoredAnchor
+        {
+            AnchorId = anchorId,
+            AnchorMapPositionId = anchorMapPositionId,
+            AnchorObject = newAnchorComponent 
+        };
+        
+        newAnchor.AddComponent<AnchorState>();
         newStoredAnchor.AnchorObject = newAnchorComponent;
         storedAnchors.Add(newStoredAnchor);
     }
@@ -215,10 +217,12 @@ public class AnchorCreator : Singleton<AnchorCreator>
         {
             if (ActiveSubsystem.GetAnchorId(localAnchors[i]) == anchorId)
             {
-                StoredAnchor newsStoredAnchor;
-                newsStoredAnchor.AnchorId = anchorId;
-                newsStoredAnchor.AnchorMapPositionId = anchorMapPositionId;
-                newsStoredAnchor.AnchorObject = localAnchors[i];
+                StoredAnchor newsStoredAnchor = new StoredAnchor
+                {
+                    AnchorId = anchorId,
+                    AnchorMapPositionId = anchorMapPositionId,
+                    AnchorObject = localAnchors[i]
+                };
 
                 storedAnchors.Add(newsStoredAnchor);
                 localAnchors.RemoveAt(i);
